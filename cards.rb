@@ -34,7 +34,16 @@ def result(hand, table)
     end
 
     if pairs.count == 1
-        "Pair of #{pairs.values.first}s"
+        result = ''
+        case pairs.values.first
+        when 2
+            result = "Pair of "
+        when 3
+            result = "Triple "
+        when 4
+            result = "Four of a kind "
+        end
+        result += "#{pairs.keys.first}s"
     elsif pairs.count == 2
         if pairs.values.index { |v| v > 2 }
             "Full house: #{pairs.keys.join(" and ")}"
