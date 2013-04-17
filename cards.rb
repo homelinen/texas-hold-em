@@ -13,6 +13,8 @@ def result(hand, table)
 
     pairs = {}
 
+    straight_count = 0;
+
     visited = []
     combined.each do |card|
 
@@ -30,10 +32,28 @@ def result(hand, table)
             end
         end
 
+        # Check if card before builds a sequence
+        if not visited.empty? 
+            if (visited.last[1] - 1 == card[1])
+                if straight_count == 0
+                    # Init straight count
+                    straight_count = 2
+                else
+                    straight_count += 1
+                end
+            elsif straight_count < 5
+                # If they don't match and a full straight wasn't found, 
+                # reset count
+                straight_count = 0
+            end
+        end
+
         visited.push card
     end
 
-    if pairs.count == 1
+    if straight_count == 5
+        "Straight!"
+    elsif pairs.count == 1
         result = ''
         case pairs.values.first
         when 2
